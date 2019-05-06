@@ -1,7 +1,18 @@
-import React from 'react';
+/* eslint-disable react/prefer-stateless-function */
+import React, { Component } from 'react';
 
-// import { Container } from './styles';
+import Header from '../../components/Header';
+import MeetupsLists from '../../components/MeetupsLists';
 
-const Dashboard = () => <div />;
+class Dashboard extends Component {
+  render() {
+    return (
+      <div>
+        <Header />
+        <MeetupsLists />
+      </div>
+    );
+  }
+}
 
 export default Dashboard;

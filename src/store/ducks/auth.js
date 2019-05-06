@@ -4,9 +4,9 @@ import Immutable from 'seamless-immutable';
 /* Types & Action Creators */
 
 const { Types, Creators } = createActions({
-  // signUpRequest: ['username', 'email', 'password', 'password_confirmation'],
   signInRequest: ['email', 'password'],
   signInSuccess: ['token'],
+  signOut: null,
 });
 
 export const AuthTypes = Types;
@@ -17,17 +17,17 @@ export default Creators;
 export const INITIAL_STATE = Immutable({
   signedIn: !!localStorage.getItem('@Meetups:token'),
   token: localStorage.getItem('@Meetups:token') || null,
+  user: localStorage.getItem('@Meetups:user') || null,
 });
 
 /* Reducers */
 
-// export const signUpSuccess,
+export const success = (state, { token }) => state.merge({ token, signedIn: true });
 
-export const success = (state, { token }) => state.merge({ signedIn: true, token });
-
+export const logout = state => state.merge({ token: null, signedIn: false });
 /* Reducers to types */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  // [Types.SIGN_UP_SUCCESS]: signUpSuccess,
   [Types.SIGN_IN_SUCCESS]: success,
+  [Types.SIGN_OUT]: logout,
 });

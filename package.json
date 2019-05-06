@@ -10,6 +10,8 @@
     "react": "^16.8.6",
     "react-app-rewired": "^2.1.3",
     "react-dom": "^16.8.6",
+    "react-files": "^2.4.8",
+    "react-icons": "^3.6.1",
     "react-redux": "^7.0.3",
     "react-redux-toastr": "^7.4.9",
     "react-router-dom": "^5.0.0",

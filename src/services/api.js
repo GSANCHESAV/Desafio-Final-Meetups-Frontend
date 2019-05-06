@@ -1,4 +1,5 @@
 import axios from 'axios';
+// eslint-disable-next-line import/no-cycle
 import store from '../store';
 
 const api = axios.create({

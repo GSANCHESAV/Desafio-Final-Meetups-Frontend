@@ -1,34 +1,104 @@
-import React from 'react';
+/* eslint-disable camelcase */
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import SignupActions from '../../../store/ducks/signup';
 
 import { Container, Box, Button } from '../styles';
 import Logo from '../../../assets/images/logo.svg';
 
-const SignUp = () => (
-  <Container>
-    <Box>
-      <img src={Logo} alt="Logo do App." />
+class SignUp extends Component {
+  static propTypes = {
+    signUpRequest: PropTypes.func.isRequired,
+  };
 
-      <form autoComplete="off" onSubmit={() => {}}>
-        <span>Nome</span>
-        <input type="text" name="username" placeholder="Digite seu nome" />
+  state = {
+    username: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    error: '',
+  };
 
-        <span>Email</span>
-        <input type="email" name="email" placeholder="Digite seu e-mail" />
+  handleSubmit = async (e) => {
+    e.preventDefault();
 
-        <span>Senha</span>
-        <input type="password" name="password" placeholder="Sua senha secreta" />
+    const {
+      username, email, password, password_confirmation,
+    } = this.state;
+    const { signUpRequest } = this.props;
 
-        <span>Confime sua senha</span>
-        <input type="password" name="password_confirmation" placeholder="Sua senha secreta" />
+    signUpRequest(username, email, password, password_confirmation);
+  };
 
-        <Button type="submit" value="submit">
-          Criar conta
-        </Button>
-      </form>
-      <Link to="/signin">Já tenho conta</Link>
-    </Box>
-  </Container>
-);
+  handleInputChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-export default SignUp;
+  render() {
+    const {
+      username, email, password, password_confirmation, error,
+    } = this.state;
+
+    return (
+      <Container>
+        <Box>
+          <img src={Logo} alt="Logo do App." />
+          {error && <p>{error}</p>}
+          <form autoComplete="off" onSubmit={this.handleSubmit}>
+            <span>Nome</span>
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={this.handleInputChange}
+              placeholder="Digite seu nome"
+            />
+
+            <span>Email</span>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={this.handleInputChange}
+              placeholder="Digite seu e-mail"
+            />
+
+            <span>Senha</span>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={this.handleInputChange}
+              placeholder="Sua senha secreta"
+            />
+
+            <span>Confime sua senha</span>
+            <input
+              type="password"
+              name="password_confirmation"
+              value={password_confirmation}
+              onChange={this.handleInputChange}
+              placeholder="Sua senha secreta"
+            />
+
+            <Button type="submit" value="submit">
+              Criar conta
+            </Button>
+          </form>
+          <Link to="/signin">Já tenho conta</Link>
+        </Box>
+      </Container>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators(SignupActions, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(SignUp);

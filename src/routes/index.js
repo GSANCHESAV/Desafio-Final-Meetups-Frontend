@@ -24,9 +24,9 @@ const Routes = () => (
       <Private path="/preferences" component={Preferences} />
       <Private path="/dashboard" component={Dashboard} />
       <Private path="/search" component={Search} />
-      <Private path="/details" component={Details} />
-      <Private path="new-meetup" component={NewMeetup} />
-      <Private path="profile" component={Profile} />
+      <Private path="/details/:id" component={Details} />
+      <Private path="/new-meetup" component={NewMeetup} />
+      <Private path="/profile" component={Profile} />
       <Guest path="*" component={SignIn} />
     </Switch>
   </ConnectedRouter>
